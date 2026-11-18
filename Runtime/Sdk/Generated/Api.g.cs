@@ -1443,13 +1443,13 @@ namespace Gamend
         /// </summary>
         /// <remarks>
         /// GET /api/v1/leaderboards/{id}/records/me
-        /// options: key.
+        /// options: key, all_time.
         /// </remarks>
         public Task<Response> LeaderboardsGetMyRecord(string id, JObject options)
         {
             if (string.IsNullOrEmpty(id)) return _rest.Refuse("LeaderboardsGetMyRecord", "id");
             var path = "/api/v1/leaderboards/" + Query.Escape(id) + "/records/me";
-            path += Query.Build(options, "key");
+            path += Query.Build(options, "key", "all_time");
             return _rest.Send("GET", path, Body.None);
         }
 
@@ -1489,13 +1489,13 @@ namespace Gamend
         /// </summary>
         /// <remarks>
         /// GET /api/v1/leaderboards/{id}/records
-        /// options: page, page_size, key.
+        /// options: page, page_size, key, search, all_time.
         /// </remarks>
         public Task<Response> LeaderboardsListLeaderboardRecords(string id, JObject options)
         {
             if (string.IsNullOrEmpty(id)) return _rest.Refuse("LeaderboardsListLeaderboardRecords", "id");
             var path = "/api/v1/leaderboards/" + Query.Escape(id) + "/records";
-            path += Query.Build(options, "page", "page_size", "key");
+            path += Query.Build(options, "page", "page_size", "key", "search", "all_time");
             return _rest.Send("GET", path, Body.None);
         }
 

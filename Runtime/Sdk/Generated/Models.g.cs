@@ -751,6 +751,16 @@ namespace Gamend.Models
     /// </summary>
     public sealed class Leaderboard
     {
+        /// <summary>
+        /// Where the board is climbed, for the reader asking (the host's): the button beside
+        /// its title. Null for none.
+        /// </summary>
+        public JToken Action { get; set; } = JValue.CreateNull();
+        /// <summary>
+        /// Has an all-time ranking (a `best` board with seasons): its records read with
+        /// `all_time=true` rank every season of the slug as one
+        /// </summary>
+        public bool AllTime { get; set; }
         public string Description { get; set; } = "";
         /// <summary>
         /// Null for a permanent leaderboard
@@ -798,6 +808,15 @@ namespace Gamend.Models
     public sealed class LeaderboardRecord
     {
         /// <summary>
+        /// The user's avatar: an uploaded picture, or
+        /// `/icons/&lt;name&gt;.svg?color=&lt;color&gt;`. Empty for a label record
+        /// </summary>
+        public string AvatarUrl { get; set; } = "";
+        /// <summary>
+        /// The host's badge beside the name (Pro); empty for none
+        /// </summary>
+        public string Badge { get; set; } = "";
+        /// <summary>
         /// The user's display name, or the label's text
         /// </summary>
         public string DisplayName { get; set; } = "";
@@ -815,6 +834,14 @@ namespace Gamend.Models
         /// </summary>
         public long Rank { get; set; }
         public long Score { get; set; }
+        /// <summary>
+        /// The host's line under the name (a rank, a title); empty for none
+        /// </summary>
+        public string Title { get; set; } = "";
+        /// <summary>
+        /// The host's look for that line (a CSS class on the website); empty for none
+        /// </summary>
+        public string TitleClass { get; set; } = "";
         public string UpdatedAt { get; set; } = "";
         /// <summary>
         /// Empty for a label record
@@ -1551,13 +1578,13 @@ namespace Gamend.Models
         /// </summary>
         public string Key { get; set; } = "";
         /// <summary>
-        /// The host's reason the caller cannot claim it yet; null when none
+        /// The host's reason the caller cannot claim it yet; empty when none
         /// </summary>
-        public string Lock { get; set; }
+        public string Lock { get; set; } = "";
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// The host's line under the description for the caller (`label`, then `items`, each a
-        /// `name` and maybe a `flag`); null when none and for a visitor
+        /// `title` and a `flag`, empty for none); null when none and for a visitor
         /// </summary>
         public JToken Note { get; set; } = JValue.CreateNull();
         public List<QuestObjective> Objectives { get; set; } = new List<QuestObjective>();

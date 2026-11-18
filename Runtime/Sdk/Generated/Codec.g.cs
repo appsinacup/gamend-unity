@@ -1023,6 +1023,8 @@ namespace Gamend.Models
             var o = j as JObject;
             if (o == null) return false;
             var v = new Leaderboard();
+            v.Action = Field<JToken>(o, "action", ReadToken, v.Action);
+            v.AllTime = Field<bool>(o, "all_time", ReadBool, v.AllTime);
             v.Description = Field<string>(o, "description", ReadString, v.Description);
             v.EndsAt = Field<string>(o, "ends_at", ReadString, v.EndsAt);
             v.IconUrl = Field<string>(o, "icon_url", ReadString, v.IconUrl);
@@ -1044,6 +1046,8 @@ namespace Gamend.Models
         {
             if (v == null) return JValue.CreateNull();
             var j = new JObject();
+            j["action"] = WriteToken(v.Action);
+            j["all_time"] = WriteBool(v.AllTime);
             j["description"] = WriteString(v.Description);
             j["ends_at"] = WriteString(v.EndsAt);
             j["icon_url"] = WriteString(v.IconUrl);
@@ -1085,11 +1089,15 @@ namespace Gamend.Models
             var o = j as JObject;
             if (o == null) return false;
             var v = new LeaderboardRecord();
+            v.AvatarUrl = Field<string>(o, "avatar_url", ReadString, v.AvatarUrl);
+            v.Badge = Field<string>(o, "badge", ReadString, v.Badge);
             v.DisplayName = Field<string>(o, "display_name", ReadString, v.DisplayName);
             v.Hidden = Field<bool>(o, "hidden", ReadBool, v.Hidden);
             v.Metadata = Field<JToken>(o, "metadata", ReadToken, v.Metadata);
             v.Rank = Field<long>(o, "rank", ReadLong, v.Rank);
             v.Score = Field<long>(o, "score", ReadLong, v.Score);
+            v.Title = Field<string>(o, "title", ReadString, v.Title);
+            v.TitleClass = Field<string>(o, "title_class", ReadString, v.TitleClass);
             v.UpdatedAt = Field<string>(o, "updated_at", ReadString, v.UpdatedAt);
             v.UserId = Field<string>(o, "user_id", ReadString, v.UserId);
             v.Username = Field<string>(o, "username", ReadString, v.Username);
@@ -1101,11 +1109,15 @@ namespace Gamend.Models
         {
             if (v == null) return JValue.CreateNull();
             var j = new JObject();
+            j["avatar_url"] = WriteString(v.AvatarUrl);
+            j["badge"] = WriteString(v.Badge);
             j["display_name"] = WriteString(v.DisplayName);
             j["hidden"] = WriteBool(v.Hidden);
             j["metadata"] = WriteToken(v.Metadata);
             j["rank"] = WriteLong(v.Rank);
             j["score"] = WriteLong(v.Score);
+            j["title"] = WriteString(v.Title);
+            j["title_class"] = WriteString(v.TitleClass);
             j["updated_at"] = WriteString(v.UpdatedAt);
             j["user_id"] = WriteString(v.UserId);
             j["username"] = WriteString(v.Username);
