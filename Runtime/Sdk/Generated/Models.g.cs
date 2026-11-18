@@ -1503,6 +1503,11 @@ namespace Gamend.Models
     public sealed class Quest
     {
         /// <summary>
+        /// Where the caller works on it, as the host's quests page links it (`label`, already
+        /// in the reader's language, and a `path` on the host's site); null when none
+        /// </summary>
+        public JToken Action { get; set; } = JValue.CreateNull();
+        /// <summary>
         /// Rewards grant on completion
         /// </summary>
         public bool AutoClaim { get; set; }
@@ -1545,7 +1550,16 @@ namespace Gamend.Models
         /// Unique slug
         /// </summary>
         public string Key { get; set; } = "";
+        /// <summary>
+        /// The host's reason the caller cannot claim it yet; null when none
+        /// </summary>
+        public string Lock { get; set; }
         public JToken Metadata { get; set; } = JValue.CreateNull();
+        /// <summary>
+        /// The host's line under the description for the caller (`label`, then `items`, each a
+        /// `name` and maybe a `flag`); null when none and for a visitor
+        /// </summary>
+        public JToken Note { get; set; } = JValue.CreateNull();
         public List<QuestObjective> Objectives { get; set; } = new List<QuestObjective>();
         /// <summary>
         /// Quest that must be completed first; empty when none

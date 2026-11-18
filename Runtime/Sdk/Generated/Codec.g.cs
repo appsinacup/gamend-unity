@@ -2066,6 +2066,7 @@ namespace Gamend.Models
             var o = j as JObject;
             if (o == null) return false;
             var v = new Quest();
+            v.Action = Field<JToken>(o, "action", ReadToken, v.Action);
             v.AutoClaim = Field<bool>(o, "auto_claim", ReadBool, v.AutoClaim);
             v.Category = Field<string>(o, "category", ReadString, v.Category);
             v.Claimable = Field<bool>(o, "claimable", ReadBool, v.Claimable);
@@ -2079,7 +2080,9 @@ namespace Gamend.Models
             v.IconUrl = Field<string>(o, "icon_url", ReadString, v.IconUrl);
             v.Id = Field<string>(o, "id", ReadString, v.Id);
             v.Key = Field<string>(o, "key", ReadString, v.Key);
+            v.Lock = Field<string>(o, "lock", ReadString, v.Lock);
             v.Metadata = Field<JToken>(o, "metadata", ReadToken, v.Metadata);
+            v.Note = Field<JToken>(o, "note", ReadToken, v.Note);
             v.Objectives = Field<List<QuestObjective>>(o, "objectives", ListOf<QuestObjective>(ReadQuestObjective), v.Objectives);
             v.PrerequisiteQuestKey = Field<string>(o, "prerequisite_quest_key", ReadString, v.PrerequisiteQuestKey);
             v.Progress = Field<QuestProgress>(o, "progress", ReadQuestProgress, v.Progress);
@@ -2097,6 +2100,7 @@ namespace Gamend.Models
         {
             if (v == null) return JValue.CreateNull();
             var j = new JObject();
+            j["action"] = WriteToken(v.Action);
             j["auto_claim"] = WriteBool(v.AutoClaim);
             j["category"] = WriteString(v.Category);
             j["claimable"] = WriteBool(v.Claimable);
@@ -2110,7 +2114,9 @@ namespace Gamend.Models
             j["icon_url"] = WriteString(v.IconUrl);
             j["id"] = WriteString(v.Id);
             j["key"] = WriteString(v.Key);
+            j["lock"] = WriteString(v.Lock);
             j["metadata"] = WriteToken(v.Metadata);
+            j["note"] = WriteToken(v.Note);
             j["objectives"] = ListWriter<QuestObjective>(WriteQuestObjective)(v.Objectives);
             j["prerequisite_quest_key"] = WriteString(v.PrerequisiteQuestKey);
             j["progress"] = WriteQuestProgress(v.Progress);
