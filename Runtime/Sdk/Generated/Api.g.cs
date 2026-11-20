@@ -2842,6 +2842,21 @@ namespace Gamend
         }
 
         /// <summary>
+        /// Set one of the current user's preferences
+        /// </summary>
+        /// <remarks>
+        /// PUT /api/v1/me/preferences
+        /// body: key (required), value (required).
+        /// </remarks>
+        public Task<Response> UserUpdateCurrentUserPreference(JObject body)
+        {
+            if (!Query.Given(body, "key")) return _rest.Refuse("UserUpdateCurrentUserPreference", "key");
+            if (!Query.Given(body, "value")) return _rest.Refuse("UserUpdateCurrentUserPreference", "value");
+            var path = "/api/v1/me/preferences";
+            return _rest.Send("PUT", path, Body.Of(body));
+        }
+
+        /// <summary>
         /// Update current user's username
         /// </summary>
         /// <remarks>

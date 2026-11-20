@@ -4,6 +4,6 @@ namespace Gamend
 {
     public static class GamendVersion
     {
-        public const string Value = "1.1.1479";
+        public const string Value = "1.1.1485";
     }
 }
