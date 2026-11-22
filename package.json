@@ -1,6 +1,6 @@
 {
   "name": "org.gamend.sdk",
-  "version": "1.1.1505",
+  "version": "1.1.1509",
   "displayName": "Gamend",
   "description": "Client SDK for Gamend, the open-source game backend: sign-in, every player API call, realtime channels and server hooks, live key-value rows and presence. Runs on every platform Unity builds for, WebGL included.",
   "unity": "2021.3",

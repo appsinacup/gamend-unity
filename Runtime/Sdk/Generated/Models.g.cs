@@ -810,6 +810,11 @@ namespace Gamend.Models
         public string StartsAt { get; set; }
         public string Title { get; set; } = "";
         public string UpdatedAt { get; set; } = "";
+        /// <summary>
+        /// What of each player's metadata the board's records carry in `user_metadata`:
+        /// top-level keys or dotted paths (`player.pass_level`). Empty for none
+        /// </summary>
+        public List<string> UserMetadataKeys { get; set; } = new List<string>();
     }
 
     /// <summary>
@@ -865,6 +870,12 @@ namespace Gamend.Models
         /// Empty for a label record
         /// </summary>
         public string UserId { get; set; } = "";
+        /// <summary>
+        /// The player's metadata at the board's `user_metadata_keys`, each in its place
+        /// (`player.pass_level` sends `{"player": {"pass_level": 7}}`), read with the row.
+        /// Empty for a label record and for a board that names none
+        /// </summary>
+        public JToken UserMetadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// Empty for a label record
         /// </summary>

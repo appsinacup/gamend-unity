@@ -1038,6 +1038,7 @@ namespace Gamend.Models
             v.StartsAt = Field<string>(o, "starts_at", ReadString, v.StartsAt);
             v.Title = Field<string>(o, "title", ReadString, v.Title);
             v.UpdatedAt = Field<string>(o, "updated_at", ReadString, v.UpdatedAt);
+            v.UserMetadataKeys = Field<List<string>>(o, "user_metadata_keys", ListOf<string>(ReadString), v.UserMetadataKeys);
             value = v;
             return true;
         }
@@ -1061,6 +1062,7 @@ namespace Gamend.Models
             j["starts_at"] = WriteString(v.StartsAt);
             j["title"] = WriteString(v.Title);
             j["updated_at"] = WriteString(v.UpdatedAt);
+            j["user_metadata_keys"] = ListWriter<string>(WriteString)(v.UserMetadataKeys);
             return j;
         }
 
@@ -1100,6 +1102,7 @@ namespace Gamend.Models
             v.TitleClass = Field<string>(o, "title_class", ReadString, v.TitleClass);
             v.UpdatedAt = Field<string>(o, "updated_at", ReadString, v.UpdatedAt);
             v.UserId = Field<string>(o, "user_id", ReadString, v.UserId);
+            v.UserMetadata = Field<JToken>(o, "user_metadata", ReadToken, v.UserMetadata);
             v.Username = Field<string>(o, "username", ReadString, v.Username);
             value = v;
             return true;
@@ -1120,6 +1123,7 @@ namespace Gamend.Models
             j["title_class"] = WriteString(v.TitleClass);
             j["updated_at"] = WriteString(v.UpdatedAt);
             j["user_id"] = WriteString(v.UserId);
+            j["user_metadata"] = WriteToken(v.UserMetadata);
             j["username"] = WriteString(v.Username);
             return j;
         }
