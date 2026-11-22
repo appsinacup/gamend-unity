@@ -301,6 +301,106 @@ namespace Gamend
             new Field(6, "data_pb", Label.Optional, FieldType.Bytes, -1),
         };
 
+        private static readonly Field[] FieldsPlayResult =
+        {
+            new Field(1, "id", Label.Singular, FieldType.String, -1),
+            new Field(2, "user_id", Label.Singular, FieldType.String, -1),
+            new Field(3, "lobby_id", Label.Singular, FieldType.String, -1),
+            new Field(4, "kind", Label.Singular, FieldType.String, -1),
+            new Field(5, "visibility", Label.Singular, FieldType.String, -1),
+            new Field(6, "status", Label.Singular, FieldType.String, -1),
+            new Field(7, "metadata_json", Label.Singular, FieldType.Bytes, -1),
+            new Field(8, "started_at_ms", Label.Optional, FieldType.Int64, -1),
+            new Field(9, "ended_at_ms", Label.Optional, FieldType.Int64, -1),
+        };
+
+        private static readonly Field[] FieldsPlayResultEvent =
+        {
+            new Field(1, "id", Label.Singular, FieldType.String, -1),
+            new Field(2, "result_id", Label.Singular, FieldType.String, -1),
+            new Field(3, "elapsed_ms", Label.Singular, FieldType.Int64, -1),
+            new Field(4, "key", Label.Singular, FieldType.String, -1),
+            new Field(5, "value_json", Label.Singular, FieldType.Bytes, -1),
+            new Field(6, "metadata_json", Label.Singular, FieldType.Bytes, -1),
+        };
+
+        private static readonly Field[] FieldsPlayResultEventPushed =
+        {
+            new Field(1, "result_id", Label.Singular, FieldType.String, -1),
+            new Field(2, "event", Label.Singular, FieldType.Message, 30),
+        };
+
+        private static readonly Field[] FieldsAccountBan =
+        {
+            new Field(1, "expires_at_ms", Label.Optional, FieldType.Int64, -1),
+            new Field(2, "reason", Label.Singular, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsEmpty =
+        {
+
+        };
+
+        private static readonly Field[] FieldsFriendship =
+        {
+            new Field(1, "id", Label.Singular, FieldType.String, -1),
+            new Field(2, "requester_id", Label.Singular, FieldType.String, -1),
+            new Field(3, "target_id", Label.Singular, FieldType.String, -1),
+            new Field(4, "status", Label.Singular, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsWebrtcAnswer =
+        {
+            new Field(1, "sdp", Label.Singular, FieldType.String, -1),
+            new Field(2, "type", Label.Singular, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsWebrtcIce =
+        {
+            new Field(1, "candidate", Label.Singular, FieldType.String, -1),
+            new Field(2, "sdpMid", Label.Optional, FieldType.String, -1),
+            new Field(3, "sdpMLineIndex", Label.Optional, FieldType.Int32, -1),
+            new Field(4, "usernameFragment", Label.Optional, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsWebrtcChannelOpen =
+        {
+            new Field(1, "channel", Label.Singular, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsWebrtcState =
+        {
+            new Field(1, "state", Label.Singular, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsSignalingPeer =
+        {
+            new Field(1, "user_id", Label.Singular, FieldType.String, -1),
+            new Field(2, "role", Label.Singular, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsSignalingPeerLeft =
+        {
+            new Field(1, "user_id", Label.Singular, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsSignalingSdp =
+        {
+            new Field(1, "sdp", Label.Singular, FieldType.String, -1),
+            new Field(2, "from_user_id", Label.Singular, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsSignalingIce =
+        {
+            new Field(1, "candidate", Label.Singular, FieldType.String, -1),
+            new Field(2, "from_user_id", Label.Singular, FieldType.String, -1),
+        };
+
+        private static readonly Field[] FieldsSignalingRoomClosed =
+        {
+            new Field(1, "room_id", Label.Singular, FieldType.String, -1),
+        };
+
         private static readonly Field[] FieldsRpcCall =
         {
             new Field(1, "id", Label.Singular, FieldType.Uint32, -1),
@@ -325,9 +425,9 @@ namespace Gamend
 
         private static readonly Field[] FieldsRtcEnvelope =
         {
-            new Field(1, "call_hook", Label.Optional, FieldType.Message, 29),
-            new Field(2, "hook_reply", Label.Optional, FieldType.Message, 30),
-            new Field(3, "hook_error", Label.Optional, FieldType.Message, 31),
+            new Field(1, "call_hook", Label.Optional, FieldType.Message, 44),
+            new Field(2, "hook_reply", Label.Optional, FieldType.Message, 45),
+            new Field(3, "hook_error", Label.Optional, FieldType.Message, 46),
         };
 
         internal static readonly Message[] Messages =
@@ -361,6 +461,21 @@ namespace Gamend
             new Message("ReadyCheckParticipant", FieldsReadyCheckParticipant),
             new Message("ReadyCheckState", FieldsReadyCheckState),
             new Message("KvEntry", FieldsKvEntry),
+            new Message("PlayResult", FieldsPlayResult),
+            new Message("PlayResultEvent", FieldsPlayResultEvent),
+            new Message("PlayResultEventPushed", FieldsPlayResultEventPushed),
+            new Message("AccountBan", FieldsAccountBan),
+            new Message("Empty", FieldsEmpty),
+            new Message("Friendship", FieldsFriendship),
+            new Message("WebrtcAnswer", FieldsWebrtcAnswer),
+            new Message("WebrtcIce", FieldsWebrtcIce),
+            new Message("WebrtcChannelOpen", FieldsWebrtcChannelOpen),
+            new Message("WebrtcState", FieldsWebrtcState),
+            new Message("SignalingPeer", FieldsSignalingPeer),
+            new Message("SignalingPeerLeft", FieldsSignalingPeerLeft),
+            new Message("SignalingSdp", FieldsSignalingSdp),
+            new Message("SignalingIce", FieldsSignalingIce),
+            new Message("SignalingRoomClosed", FieldsSignalingRoomClosed),
             new Message("RpcCall", FieldsRpcCall),
             new Message("RpcReply", FieldsRpcReply),
             new Message("RpcError", FieldsRpcError),

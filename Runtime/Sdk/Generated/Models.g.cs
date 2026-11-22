@@ -106,6 +106,9 @@ namespace Gamend.Models
         public string Content { get; set; } = "";
         public string Id { get; set; } = "";
         public string InsertedAt { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// Admin endpoints only
@@ -330,6 +333,9 @@ namespace Gamend.Models
         /// Current lobby id, or empty
         /// </summary>
         public string LobbyId { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// Current party id, or empty
@@ -369,6 +375,9 @@ namespace Gamend.Models
         /// What the game checks for
         /// </summary>
         public string Key { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// Empty when not granted by a product
@@ -419,6 +428,9 @@ namespace Gamend.Models
         public bool IsActivated { get; set; }
         public bool IsOnline { get; set; }
         public string LastSeenAt { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         public string ProfileUrl { get; set; } = "";
         public string Username { get; set; } = "";
@@ -739,6 +751,9 @@ namespace Gamend.Models
         /// Owning lobby; empty when not lobby-scoped
         /// </summary>
         public string LobbyId { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// Owning user; empty when not user-scoped
@@ -776,6 +791,9 @@ namespace Gamend.Models
         /// Still accepting scores
         /// </summary>
         public bool IsActive { get; set; }
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// How a submitted score combines with the stored one
@@ -876,6 +894,9 @@ namespace Gamend.Models
         public long Delta { get; set; }
         public string Id { get; set; } = "";
         public string InsertedAt { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// Why, as the granting code named it
@@ -1031,6 +1052,9 @@ namespace Gamend.Models
         /// Empty unless a lobby board
         /// </summary>
         public string LobbyId { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// Empty when the server opened it
@@ -1088,6 +1112,9 @@ namespace Gamend.Models
         public string IconUrl { get; set; } = "";
         public string Id { get; set; } = "";
         public string InsertedAt { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         public string RecipientId { get; set; } = "";
         /// <summary>
@@ -1190,6 +1217,9 @@ namespace Gamend.Models
         /// </summary>
         public long MaxSize { get; set; }
         public List<UserBrief> Members { get; set; } = new List<UserBrief>();
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         public string UpdatedAt { get; set; } = "";
     }
@@ -1229,6 +1259,9 @@ namespace Gamend.Models
         /// What buying it grants, e.g. `entitlement`
         /// </summary>
         public string Kind { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         public string Sku { get; set; } = "";
         public string Title { get; set; } = "";
@@ -1248,6 +1281,9 @@ namespace Gamend.Models
         /// </summary>
         public string ExternalId { get; set; } = "";
         public string Id { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         public PaymentProduct Product { get; set; } = new PaymentProduct();
         /// <summary>
@@ -1323,6 +1359,9 @@ namespace Gamend.Models
         /// What happened
         /// </summary>
         public string Key { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         public string ResultId { get; set; } = "";
         public double? Value { get; set; }
@@ -1455,6 +1494,9 @@ namespace Gamend.Models
         public string Id { get; set; } = "";
         public string InsertedAt { get; set; } = "";
         public string LastUsedAt { get; set; }
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         public string Platform { get; set; } = "";
         /// <summary>
@@ -1581,6 +1623,9 @@ namespace Gamend.Models
         /// The host's reason the caller cannot claim it yet; empty when none
         /// </summary>
         public string Lock { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// The host's line under the description for the caller (`label`, then `items`, each a
@@ -1688,10 +1733,13 @@ namespace Gamend.Models
     public sealed class ReportReceipt
     {
         /// <summary>
-        /// Report id
+        /// Report id; empty when the kind took the report elsewhere
         /// </summary>
         public string Id { get; set; } = "";
         public string Kind { get; set; } = "";
+        /// <summary>
+        /// `open`, or `taken`: the host handles it outside the queue, nothing stored
+        /// </summary>
         public string Status { get; set; } = "";
     }
 
@@ -1837,6 +1885,9 @@ namespace Gamend.Models
         public long? BracketIndex { get; set; }
         public string Id { get; set; } = "";
         public string LeaderId { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// Null until the draw
@@ -1864,6 +1915,9 @@ namespace Gamend.Models
         /// Null for no cap
         /// </summary>
         public long? MaxEntries { get; set; }
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         /// <summary>
         /// The caller's entry. Only `GET /tournaments/{id}` sends it; null when the caller has
@@ -1916,6 +1970,9 @@ namespace Gamend.Models
         public long BracketIndex { get; set; }
         public string DeadlineAt { get; set; }
         public string Id { get; set; } = "";
+        /// <summary>
+        /// metadata the game defines
+        /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
         public string ResolvedAt { get; set; }
         /// <summary>

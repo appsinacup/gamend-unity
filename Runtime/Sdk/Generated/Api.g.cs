@@ -2574,6 +2574,24 @@ namespace Gamend
             return _rest.Send("GET", path, Body.None);
         }
 
+        // Storage
+
+        /// <summary>
+        /// Upload a file's bytes to an upload ticket (local storage)
+        /// </summary>
+        /// <remarks>
+        /// PUT /api/v1/storage/upload
+        /// options: token (required), key.
+        /// bytes go as application/octet-stream; Rest.Send with Body.Raw sends another type.
+        /// </remarks>
+        public Task<Response> StorageStorageUpload(byte[] bytes, JObject options)
+        {
+            if (!Query.Given(options, "token")) return _rest.Refuse("StorageStorageUpload", "token");
+            var path = "/api/v1/storage/upload";
+            path += Query.Build(options, "token", "key");
+            return _rest.Send("PUT", path, Body.Raw(bytes));
+        }
+
         // Time
 
         /// <summary>
