@@ -285,6 +285,20 @@ namespace Gamend
         }
 
         /// <summary>
+        /// Email a code to set a new password
+        /// </summary>
+        /// <remarks>
+        /// POST /api/v1/password/reset
+        /// body: email (required).
+        /// </remarks>
+        public Task<Response> AuthenticationRequestPasswordReset(JObject body)
+        {
+            if (!Query.Given(body, "email")) return _rest.Refuse("AuthenticationRequestPasswordReset", "email");
+            var path = "/api/v1/password/reset";
+            return _rest.Send("POST", path, Body.Of(body));
+        }
+
+        /// <summary>
         /// Send the confirmation email again
         /// </summary>
         /// <remarks>
@@ -295,6 +309,22 @@ namespace Gamend
         {
             if (!Query.Given(body, "email")) return _rest.Refuse("AuthenticateResendConfirmation", "email");
             var path = "/api/v1/register/resend";
+            return _rest.Send("POST", path, Body.Of(body));
+        }
+
+        /// <summary>
+        /// Set a new password with the emailed code
+        /// </summary>
+        /// <remarks>
+        /// POST /api/v1/password/reset/confirm
+        /// body: email (required), code (required), password (required).
+        /// </remarks>
+        public Task<Response> AuthenticationResetPassword(JObject body)
+        {
+            if (!Query.Given(body, "email")) return _rest.Refuse("AuthenticationResetPassword", "email");
+            if (!Query.Given(body, "code")) return _rest.Refuse("AuthenticationResetPassword", "code");
+            if (!Query.Given(body, "password")) return _rest.Refuse("AuthenticationResetPassword", "password");
+            var path = "/api/v1/password/reset/confirm";
             return _rest.Send("POST", path, Body.Of(body));
         }
 
