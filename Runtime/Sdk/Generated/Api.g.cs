@@ -171,6 +171,21 @@ namespace Gamend
         }
 
         /// <summary>
+        /// Log in with the emailed code
+        /// </summary>
+        /// <remarks>
+        /// POST /api/v1/login/code/confirm
+        /// body: email (required), code (required).
+        /// </remarks>
+        public Task<Response> AuthenticationLoginWithCode(JObject body)
+        {
+            if (!Query.Given(body, "email")) return _rest.Refuse("AuthenticationLoginWithCode", "email");
+            if (!Query.Given(body, "code")) return _rest.Refuse("AuthenticationLoginWithCode", "code");
+            var path = "/api/v1/login/code/confirm";
+            return _rest.Send("POST", path, Body.Of(body));
+        }
+
+        /// <summary>
         /// Logout
         /// </summary>
         /// <remarks>
@@ -281,6 +296,20 @@ namespace Gamend
         {
             if (!Query.Given(body, "email")) return _rest.Refuse("AuthenticateRegister", "email");
             var path = "/api/v1/register";
+            return _rest.Send("POST", path, Body.Of(body));
+        }
+
+        /// <summary>
+        /// Email a code to log in
+        /// </summary>
+        /// <remarks>
+        /// POST /api/v1/login/code
+        /// body: email (required).
+        /// </remarks>
+        public Task<Response> AuthenticationRequestLoginCode(JObject body)
+        {
+            if (!Query.Given(body, "email")) return _rest.Refuse("AuthenticationRequestLoginCode", "email");
+            var path = "/api/v1/login/code";
             return _rest.Send("POST", path, Body.Of(body));
         }
 
