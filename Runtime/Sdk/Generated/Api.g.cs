@@ -2821,7 +2821,7 @@ namespace Gamend
         /// </summary>
         /// <remarks>
         /// DELETE /api/v1/me
-        /// body: current_password.
+        /// body: current_password, reason.
         /// </remarks>
         public Task<Response> UserDeleteCurrentUser(JObject body)
         {
