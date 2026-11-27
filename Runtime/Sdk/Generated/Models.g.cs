@@ -2029,6 +2029,17 @@ namespace Gamend.Models
     }
 
     /// <summary>
+    /// The time zones the settings page's picker offers
+    /// </summary>
+    public sealed class TimeZones
+    {
+        /// <summary>
+        /// IANA names, sorted, `UTC` among them: each is the picker's value and its words
+        /// </summary>
+        public List<string> Zones { get; set; } = new List<string>();
+    }
+
+    /// <summary>
     /// An entry in a tournament
     /// </summary>
     public sealed class TournamentEntry

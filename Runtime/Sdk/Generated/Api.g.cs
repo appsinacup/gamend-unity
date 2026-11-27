@@ -1875,6 +1875,18 @@ namespace Gamend
         }
 
         /// <summary>
+        /// Delete every notification
+        /// </summary>
+        /// <remarks>
+        /// DELETE /api/v1/notifications/all
+        /// </remarks>
+        public Task<Response> NotificationsDeleteAllNotifications()
+        {
+            var path = "/api/v1/notifications/all";
+            return _rest.Send("DELETE", path, Body.None);
+        }
+
+        /// <summary>
         /// Delete notifications by IDs
         /// </summary>
         /// <remarks>
@@ -1905,12 +1917,12 @@ namespace Gamend
         /// </summary>
         /// <remarks>
         /// GET /api/v1/notifications
-        /// options: page, page_size.
+        /// options: page, page_size, sort_by.
         /// </remarks>
         public Task<Response> NotificationsListNotifications(JObject options)
         {
             var path = "/api/v1/notifications";
-            path += Query.Build(options, "page", "page_size");
+            path += Query.Build(options, "page", "page_size", "sort_by");
             return _rest.Send("GET", path, Body.None);
         }
 
@@ -2735,6 +2747,18 @@ namespace Gamend
         public Task<Response> TimeGetServerTime()
         {
             var path = "/api/v1/time";
+            return _rest.Send("GET", path, Body.None);
+        }
+
+        /// <summary>
+        /// Time zones to pick from
+        /// </summary>
+        /// <remarks>
+        /// GET /api/v1/time_zones
+        /// </remarks>
+        public Task<Response> TimeListTimeZones()
+        {
+            var path = "/api/v1/time_zones";
             return _rest.Send("GET", path, Body.None);
         }
 

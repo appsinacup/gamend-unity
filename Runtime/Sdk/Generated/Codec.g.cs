@@ -2638,6 +2638,25 @@ namespace Gamend.Models
             return j;
         }
 
+        public static bool ReadTimeZones(JToken j, out TimeZones value)
+        {
+            value = null;
+            var o = j as JObject;
+            if (o == null) return false;
+            var v = new TimeZones();
+            v.Zones = Field<List<string>>(o, "zones", ListOf<string>(ReadString), v.Zones);
+            value = v;
+            return true;
+        }
+
+        public static JToken WriteTimeZones(TimeZones v)
+        {
+            if (v == null) return JValue.CreateNull();
+            var j = new JObject();
+            j["zones"] = ListWriter<string>(WriteString)(v.Zones);
+            return j;
+        }
+
         public static bool ReadTournamentEntry(JToken j, out TournamentEntry value)
         {
             value = null;
@@ -3108,6 +3127,8 @@ namespace Gamend.Models
             [typeof(List<SteamCheckout>)] = j => { List<SteamCheckout> v; return ListOf<SteamCheckout>(ReadSteamCheckout)(j, out v) ? v : null; },
             [typeof(StripeCheckout)] = j => { StripeCheckout v; return ReadStripeCheckout(j, out v) ? v : null; },
             [typeof(List<StripeCheckout>)] = j => { List<StripeCheckout> v; return ListOf<StripeCheckout>(ReadStripeCheckout)(j, out v) ? v : null; },
+            [typeof(TimeZones)] = j => { TimeZones v; return ReadTimeZones(j, out v) ? v : null; },
+            [typeof(List<TimeZones>)] = j => { List<TimeZones> v; return ListOf<TimeZones>(ReadTimeZones)(j, out v) ? v : null; },
             [typeof(TournamentEntry)] = j => { TournamentEntry v; return ReadTournamentEntry(j, out v) ? v : null; },
             [typeof(List<TournamentEntry>)] = j => { List<TournamentEntry> v; return ListOf<TournamentEntry>(ReadTournamentEntry)(j, out v) ? v : null; },
             [typeof(Tournament)] = j => { Tournament v; return ReadTournament(j, out v) ? v : null; },
