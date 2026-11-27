@@ -538,12 +538,38 @@ namespace Gamend.Models
             return j;
         }
 
+        public static bool ReadPlayerCard(JToken j, out PlayerCard value)
+        {
+            value = null;
+            var o = j as JObject;
+            if (o == null) return false;
+            var v = new PlayerCard();
+            v.Badge = Field<string>(o, "badge", ReadString, v.Badge);
+            v.Mark = Field<string>(o, "mark", ReadString, v.Mark);
+            v.Title = Field<string>(o, "title", ReadString, v.Title);
+            v.TitleClass = Field<string>(o, "title_class", ReadString, v.TitleClass);
+            value = v;
+            return true;
+        }
+
+        public static JToken WritePlayerCard(PlayerCard v)
+        {
+            if (v == null) return JValue.CreateNull();
+            var j = new JObject();
+            j["badge"] = WriteString(v.Badge);
+            j["mark"] = WriteString(v.Mark);
+            j["title"] = WriteString(v.Title);
+            j["title_class"] = WriteString(v.TitleClass);
+            return j;
+        }
+
         public static bool ReadFriend(JToken j, out Friend value)
         {
             value = null;
             var o = j as JObject;
             if (o == null) return false;
             var v = new Friend();
+            v.Card = Field<PlayerCard>(o, "card", ReadPlayerCard, v.Card);
             v.DisplayName = Field<string>(o, "display_name", ReadString, v.DisplayName);
             v.FriendshipId = Field<string>(o, "friendship_id", ReadString, v.FriendshipId);
             v.Id = Field<string>(o, "id", ReadString, v.Id);
@@ -561,8 +587,44 @@ namespace Gamend.Models
         {
             if (v == null) return JValue.CreateNull();
             var j = new JObject();
+            j["card"] = WritePlayerCard(v.Card);
             j["display_name"] = WriteString(v.DisplayName);
             j["friendship_id"] = WriteString(v.FriendshipId);
+            j["id"] = WriteString(v.Id);
+            j["is_activated"] = WriteBool(v.IsActivated);
+            j["is_online"] = WriteBool(v.IsOnline);
+            j["last_seen_at"] = WriteString(v.LastSeenAt);
+            j["metadata"] = WriteToken(v.Metadata);
+            j["profile_url"] = WriteString(v.ProfileUrl);
+            j["username"] = WriteString(v.Username);
+            return j;
+        }
+
+        public static bool ReadUserCard(JToken j, out UserCard value)
+        {
+            value = null;
+            var o = j as JObject;
+            if (o == null) return false;
+            var v = new UserCard();
+            v.Card = Field<PlayerCard>(o, "card", ReadPlayerCard, v.Card);
+            v.DisplayName = Field<string>(o, "display_name", ReadString, v.DisplayName);
+            v.Id = Field<string>(o, "id", ReadString, v.Id);
+            v.IsActivated = Field<bool>(o, "is_activated", ReadBool, v.IsActivated);
+            v.IsOnline = Field<bool>(o, "is_online", ReadBool, v.IsOnline);
+            v.LastSeenAt = Field<string>(o, "last_seen_at", ReadString, v.LastSeenAt);
+            v.Metadata = Field<JToken>(o, "metadata", ReadToken, v.Metadata);
+            v.ProfileUrl = Field<string>(o, "profile_url", ReadString, v.ProfileUrl);
+            v.Username = Field<string>(o, "username", ReadString, v.Username);
+            value = v;
+            return true;
+        }
+
+        public static JToken WriteUserCard(UserCard v)
+        {
+            if (v == null) return JValue.CreateNull();
+            var j = new JObject();
+            j["card"] = WritePlayerCard(v.Card);
+            j["display_name"] = WriteString(v.DisplayName);
             j["id"] = WriteString(v.Id);
             j["is_activated"] = WriteBool(v.IsActivated);
             j["is_online"] = WriteBool(v.IsOnline);
@@ -581,9 +643,9 @@ namespace Gamend.Models
             var v = new FriendRequest();
             v.Id = Field<string>(o, "id", ReadString, v.Id);
             v.InsertedAt = Field<string>(o, "inserted_at", ReadString, v.InsertedAt);
-            v.Requester = Field<UserBrief>(o, "requester", ReadUserBrief, v.Requester);
+            v.Requester = Field<UserCard>(o, "requester", ReadUserCard, v.Requester);
             v.Status = Field<string>(o, "status", ReadString, v.Status);
-            v.Target = Field<UserBrief>(o, "target", ReadUserBrief, v.Target);
+            v.Target = Field<UserCard>(o, "target", ReadUserCard, v.Target);
             value = v;
             return true;
         }
@@ -594,9 +656,9 @@ namespace Gamend.Models
             var j = new JObject();
             j["id"] = WriteString(v.Id);
             j["inserted_at"] = WriteString(v.InsertedAt);
-            j["requester"] = WriteUserBrief(v.Requester);
+            j["requester"] = WriteUserCard(v.Requester);
             j["status"] = WriteString(v.Status);
-            j["target"] = WriteUserBrief(v.Target);
+            j["target"] = WriteUserCard(v.Target);
             return j;
         }
 
@@ -975,19 +1037,29 @@ namespace Gamend.Models
             return j;
         }
 
-        public static bool ReadInventory(JToken j, out Inventory value)
+        public static bool ReadInventoryItem(JToken j, out InventoryItem value)
         {
             value = null;
             var o = j as JObject;
             if (o == null) return false;
-            value = new Inventory();
-            Fill<long>(o, value, ReadLong);
+            var v = new InventoryItem();
+            v.Item = Field<string>(o, "item", ReadString, v.Item);
+            v.Metadata = Field<JToken>(o, "metadata", ReadToken, v.Metadata);
+            v.Quantity = Field<long>(o, "quantity", ReadLong, v.Quantity);
+            v.UpdatedAt = Field<string>(o, "updated_at", ReadString, v.UpdatedAt);
+            value = v;
             return true;
         }
 
-        public static JToken WriteInventory(Inventory v)
+        public static JToken WriteInventoryItem(InventoryItem v)
         {
-            return MapWriter<long>(WriteLong)(v);
+            if (v == null) return JValue.CreateNull();
+            var j = new JObject();
+            j["item"] = WriteString(v.Item);
+            j["metadata"] = WriteToken(v.Metadata);
+            j["quantity"] = WriteLong(v.Quantity);
+            j["updated_at"] = WriteString(v.UpdatedAt);
+            return j;
         }
 
         public static bool ReadKvEntry(JToken j, out KvEntry value)
@@ -1095,6 +1167,7 @@ namespace Gamend.Models
             v.Badge = Field<string>(o, "badge", ReadString, v.Badge);
             v.DisplayName = Field<string>(o, "display_name", ReadString, v.DisplayName);
             v.Hidden = Field<bool>(o, "hidden", ReadBool, v.Hidden);
+            v.Mark = Field<string>(o, "mark", ReadString, v.Mark);
             v.Metadata = Field<JToken>(o, "metadata", ReadToken, v.Metadata);
             v.Rank = Field<long>(o, "rank", ReadLong, v.Rank);
             v.Score = Field<long>(o, "score", ReadLong, v.Score);
@@ -1116,6 +1189,7 @@ namespace Gamend.Models
             j["badge"] = WriteString(v.Badge);
             j["display_name"] = WriteString(v.DisplayName);
             j["hidden"] = WriteBool(v.Hidden);
+            j["mark"] = WriteString(v.Mark);
             j["metadata"] = WriteToken(v.Metadata);
             j["rank"] = WriteLong(v.Rank);
             j["score"] = WriteLong(v.Score);
@@ -1954,6 +2028,7 @@ namespace Gamend.Models
             var o = j as JObject;
             if (o == null) return false;
             var v = new PublicUser();
+            v.Card = Field<PlayerCard>(o, "card", ReadPlayerCard, v.Card);
             v.DisplayName = Field<string>(o, "display_name", ReadString, v.DisplayName);
             v.Id = Field<string>(o, "id", ReadString, v.Id);
             v.IsActivated = Field<bool>(o, "is_activated", ReadBool, v.IsActivated);
@@ -1969,6 +2044,7 @@ namespace Gamend.Models
         {
             if (v == null) return JValue.CreateNull();
             var j = new JObject();
+            j["card"] = WritePlayerCard(v.Card);
             j["display_name"] = WriteString(v.DisplayName);
             j["id"] = WriteString(v.Id);
             j["is_activated"] = WriteBool(v.IsActivated);
@@ -2883,8 +2959,12 @@ namespace Gamend.Models
             [typeof(List<Entitlement>)] = j => { List<Entitlement> v; return ListOf<Entitlement>(ReadEntitlement)(j, out v) ? v : null; },
             [typeof(ErrorResponse)] = j => { ErrorResponse v; return ReadErrorResponse(j, out v) ? v : null; },
             [typeof(List<ErrorResponse>)] = j => { List<ErrorResponse> v; return ListOf<ErrorResponse>(ReadErrorResponse)(j, out v) ? v : null; },
+            [typeof(PlayerCard)] = j => { PlayerCard v; return ReadPlayerCard(j, out v) ? v : null; },
+            [typeof(List<PlayerCard>)] = j => { List<PlayerCard> v; return ListOf<PlayerCard>(ReadPlayerCard)(j, out v) ? v : null; },
             [typeof(Friend)] = j => { Friend v; return ReadFriend(j, out v) ? v : null; },
             [typeof(List<Friend>)] = j => { List<Friend> v; return ListOf<Friend>(ReadFriend)(j, out v) ? v : null; },
+            [typeof(UserCard)] = j => { UserCard v; return ReadUserCard(j, out v) ? v : null; },
+            [typeof(List<UserCard>)] = j => { List<UserCard> v; return ListOf<UserCard>(ReadUserCard)(j, out v) ? v : null; },
             [typeof(FriendRequest)] = j => { FriendRequest v; return ReadFriendRequest(j, out v) ? v : null; },
             [typeof(List<FriendRequest>)] = j => { List<FriendRequest> v; return ListOf<FriendRequest>(ReadFriendRequest)(j, out v) ? v : null; },
             [typeof(FriendRequestLists)] = j => { FriendRequestLists v; return ReadFriendRequestLists(j, out v) ? v : null; },
@@ -2913,8 +2993,8 @@ namespace Gamend.Models
             [typeof(List<HookSignature>)] = j => { List<HookSignature> v; return ListOf<HookSignature>(ReadHookSignature)(j, out v) ? v : null; },
             [typeof(HookFunction)] = j => { HookFunction v; return ReadHookFunction(j, out v) ? v : null; },
             [typeof(List<HookFunction>)] = j => { List<HookFunction> v; return ListOf<HookFunction>(ReadHookFunction)(j, out v) ? v : null; },
-            [typeof(Inventory)] = j => { Inventory v; return ReadInventory(j, out v) ? v : null; },
-            [typeof(List<Inventory>)] = j => { List<Inventory> v; return ListOf<Inventory>(ReadInventory)(j, out v) ? v : null; },
+            [typeof(InventoryItem)] = j => { InventoryItem v; return ReadInventoryItem(j, out v) ? v : null; },
+            [typeof(List<InventoryItem>)] = j => { List<InventoryItem> v; return ListOf<InventoryItem>(ReadInventoryItem)(j, out v) ? v : null; },
             [typeof(KvEntry)] = j => { KvEntry v; return ReadKvEntry(j, out v) ? v : null; },
             [typeof(List<KvEntry>)] = j => { List<KvEntry> v; return ListOf<KvEntry>(ReadKvEntry)(j, out v) ? v : null; },
             [typeof(Leaderboard)] = j => { Leaderboard v; return ReadLeaderboard(j, out v) ? v : null; },

@@ -412,10 +412,34 @@ namespace Gamend.Models
     }
 
     /// <summary>
+    /// The host's line, badge and mark for a player
+    /// </summary>
+    public sealed class PlayerCard
+    {
+        /// <summary>
+        /// The tag beside the name (`:user_badge`, "Pro"); empty for none
+        /// </summary>
+        public string Badge { get; set; } = "";
+        /// <summary>
+        /// What the host draws on the avatar (`:user_mark`, a level); empty for none
+        /// </summary>
+        public string Mark { get; set; } = "";
+        /// <summary>
+        /// The line under the name (`:user_title`), in the reader's language; empty for none
+        /// </summary>
+        public string Title { get; set; } = "";
+        /// <summary>
+        /// The host's class for that line (`:user_title_class`), its look; empty for none
+        /// </summary>
+        public string TitleClass { get; set; } = "";
+    }
+
+    /// <summary>
     /// An accepted friend
     /// </summary>
     public sealed class Friend
     {
+        public PlayerCard Card { get; set; } = new PlayerCard();
         public string DisplayName { get; set; } = "";
         /// <summary>
         /// The friendship row: the id remove, block and unblock take
@@ -437,6 +461,36 @@ namespace Gamend.Models
     }
 
     /// <summary>
+    /// A user with their player card
+    /// </summary>
+    public sealed class UserCard
+    {
+        public PlayerCard Card { get; set; } = new PlayerCard();
+        /// <summary>
+        /// Chosen name
+        /// </summary>
+        public string DisplayName { get; set; } = "";
+        public string Id { get; set; } = "";
+        public bool IsActivated { get; set; }
+        public bool IsOnline { get; set; }
+        public string LastSeenAt { get; set; } = "";
+        /// <summary>
+        /// Public user metadata
+        /// </summary>
+        public JToken Metadata { get; set; } = JValue.CreateNull();
+        /// <summary>
+        /// The avatar: an image we host, or one of the server's icons
+        /// (`/icons/&lt;name&gt;.svg?color=&lt;color&gt;`), one the user's id gives them when
+        /// they set none
+        /// </summary>
+        public string ProfileUrl { get; set; } = "";
+        /// <summary>
+        /// Unique handle
+        /// </summary>
+        public string Username { get; set; } = "";
+    }
+
+    /// <summary>
     /// A friend request
     /// </summary>
     public sealed class FriendRequest
@@ -446,9 +500,9 @@ namespace Gamend.Models
         /// </summary>
         public string Id { get; set; } = "";
         public string InsertedAt { get; set; } = "";
-        public UserBrief Requester { get; set; } = new UserBrief();
+        public UserCard Requester { get; set; } = new UserCard();
         public string Status { get; set; } = "";
-        public UserBrief Target { get; set; } = new UserBrief();
+        public UserCard Target { get; set; } = new UserCard();
     }
 
     /// <summary>
@@ -731,10 +785,20 @@ namespace Gamend.Models
     }
 
     /// <summary>
-    /// Item code to quantity
+    /// An item stack
     /// </summary>
-    public sealed class Inventory : Dictionary<string, long>
+    public sealed class InventoryItem
     {
+        /// <summary>
+        /// The item's code
+        /// </summary>
+        public string Item { get; set; } = "";
+        /// <summary>
+        /// The stack's own properties
+        /// </summary>
+        public JToken Metadata { get; set; } = JValue.CreateNull();
+        public long Quantity { get; set; }
+        public string UpdatedAt { get; set; } = "";
     }
 
     /// <summary>
@@ -848,6 +912,10 @@ namespace Gamend.Models
         /// account to be listed): `rank` is where it would stand. Register to be listed.
         /// </summary>
         public bool Hidden { get; set; }
+        /// <summary>
+        /// What the host draws on the avatar (a level); empty for none
+        /// </summary>
+        public string Mark { get; set; } = "";
         /// <summary>
         /// Per-record metadata
         /// </summary>
@@ -1499,6 +1567,7 @@ namespace Gamend.Models
     /// </summary>
     public sealed class PublicUser
     {
+        public PlayerCard Card { get; set; } = new PlayerCard();
         /// <summary>
         /// Chosen name
         /// </summary>

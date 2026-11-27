@@ -687,15 +687,25 @@ namespace Gamend
         // Economy
 
         /// <summary>
-        /// Current user's item quantities
+        /// Current user's item stacks
         /// </summary>
         /// <remarks>
         /// GET /api/v1/me/inventory
+        /// options: page, page_size.
         /// </remarks>
-        public Task<Response> EconomyGetCurrentUserInventory()
+        public Task<Response> EconomyGetCurrentUserInventory(JObject options)
         {
             var path = "/api/v1/me/inventory";
+            path += Query.Build(options, "page", "page_size");
             return _rest.Send("GET", path, Body.None);
+        }
+
+        /// <summary>
+        /// Current user's item stacks
+        /// </summary>
+        public Task<Response> EconomyGetCurrentUserInventory()
+        {
+            return EconomyGetCurrentUserInventory(null);
         }
 
         /// <summary>
