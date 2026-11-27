@@ -1127,6 +1127,10 @@ namespace Gamend.Models
         /// metadata the game defines
         /// </summary>
         public JToken Metadata { get; set; } = JValue.CreateNull();
+        /// <summary>
+        /// Whether the recipient has read it (`mark_notifications_read`)
+        /// </summary>
+        public bool Read { get; set; }
         public string RecipientId { get; set; } = "";
         /// <summary>
         /// Empty for a system notification
@@ -1134,6 +1138,76 @@ namespace Gamend.Models
         public string SenderId { get; set; } = "";
         public string SenderName { get; set; } = "";
         public string Title { get; set; } = "";
+    }
+
+    /// <summary>
+    /// Which channels a notification group reaches the user through
+    /// </summary>
+    public sealed class NotificationGroupSetting
+    {
+        /// <summary>
+        /// The channels the user may change; the others keep their default
+        /// </summary>
+        public List<string> Configurable { get; set; } = new List<string>();
+        /// <summary>
+        /// Each channel (`in_app`, `email`, `push`): whether it is sent there
+        /// </summary>
+        public Dictionary<string, bool> Enabled { get; set; } = new Dictionary<string, bool>();
+        /// <summary>
+        /// The group (`social`, `chat`, a host's)
+        /// </summary>
+        public string Key { get; set; } = "";
+        /// <summary>
+        /// Its name, in the user's language
+        /// </summary>
+        public string Label { get; set; } = "";
+    }
+
+    /// <summary>
+    /// Which notifications the user gets, and where
+    /// </summary>
+    public sealed class NotificationSettings
+    {
+        /// <summary>
+        /// The channels, in the order the settings page shows them
+        /// </summary>
+        public List<string> Channels { get; set; } = new List<string>();
+        public List<NotificationGroupSetting> Groups { get; set; } = new List<NotificationGroupSetting>();
+        /// <summary>
+        /// Everything off
+        /// </summary>
+        public bool OffAll { get; set; }
+        /// <summary>
+        /// All email off
+        /// </summary>
+        public bool OffEmail { get; set; }
+        /// <summary>
+        /// All phone notifications off
+        /// </summary>
+        public bool OffPush { get; set; }
+        /// <summary>
+        /// The user's IANA time zone, empty when unknown (UTC then)
+        /// </summary>
+        public string Timezone { get; set; } = "";
+        /// <summary>
+        /// Chosen by hand: a device's zone does not replace it
+        /// </summary>
+        public bool TimezoneManual { get; set; }
+    }
+
+    /// <summary>
+    /// Notifications marked read
+    /// </summary>
+    public sealed class NotificationsRead
+    {
+        /// <summary>
+        /// How many were unread and are read now
+        /// </summary>
+        public long Marked { get; set; }
+        /// <summary>
+        /// How many of the user's are unread
+        /// </summary>
+        public long UnreadCount { get; set; }
     }
 
     /// <summary>
@@ -2043,6 +2117,14 @@ namespace Gamend.Models
     {
         public List<TournamentEntry> Champions { get; set; } = new List<TournamentEntry>();
         public List<TournamentPlacement> Placements { get; set; } = new List<TournamentPlacement>();
+    }
+
+    /// <summary>
+    /// Unread notifications
+    /// </summary>
+    public sealed class UnreadCount
+    {
+        public long UnreadCount_ { get; set; }
     }
 
     /// <summary>

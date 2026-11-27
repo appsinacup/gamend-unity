@@ -66,6 +66,13 @@ namespace Gamend
             new Field(8, "inserted_at_ms", Label.Singular, FieldType.Int64, -1),
             new Field(9, "icon_url", Label.Singular, FieldType.String, -1),
             new Field(10, "group", Label.Singular, FieldType.String, -1),
+            new Field(11, "read", Label.Singular, FieldType.Bool, -1),
+        };
+
+        private static readonly Field[] FieldsNotificationsRead =
+        {
+            new Field(1, "ids", Label.Repeated, FieldType.String, -1),
+            new Field(2, "unread_count", Label.Singular, FieldType.Int64, -1),
         };
 
         private static readonly Field[] FieldsChatMessage =
@@ -285,7 +292,7 @@ namespace Gamend
             new Field(7, "ready_count", Label.Singular, FieldType.Int32, -1),
             new Field(8, "your_state", Label.Singular, FieldType.String, -1),
             new Field(9, "reason", Label.Singular, FieldType.String, -1),
-            new Field(10, "participants", Label.Repeated, FieldType.Message, 26),
+            new Field(10, "participants", Label.Repeated, FieldType.Message, 27),
             new Field(11, "party_id", Label.Singular, FieldType.String, -1),
             new Field(12, "opened_by", Label.Singular, FieldType.String, -1),
             new Field(13, "metadata_json", Label.Singular, FieldType.Bytes, -1),
@@ -327,7 +334,7 @@ namespace Gamend
         private static readonly Field[] FieldsPlayResultEventPushed =
         {
             new Field(1, "result_id", Label.Singular, FieldType.String, -1),
-            new Field(2, "event", Label.Singular, FieldType.Message, 30),
+            new Field(2, "event", Label.Singular, FieldType.Message, 31),
         };
 
         private static readonly Field[] FieldsAccountBan =
@@ -425,9 +432,9 @@ namespace Gamend
 
         private static readonly Field[] FieldsRtcEnvelope =
         {
-            new Field(1, "call_hook", Label.Optional, FieldType.Message, 44),
-            new Field(2, "hook_reply", Label.Optional, FieldType.Message, 45),
-            new Field(3, "hook_error", Label.Optional, FieldType.Message, 46),
+            new Field(1, "call_hook", Label.Optional, FieldType.Message, 45),
+            new Field(2, "hook_reply", Label.Optional, FieldType.Message, 46),
+            new Field(3, "hook_error", Label.Optional, FieldType.Message, 47),
         };
 
         internal static readonly Message[] Messages =
@@ -437,6 +444,7 @@ namespace Gamend
             new Message("FriendUpdate", FieldsFriendUpdate),
             new Message("UserBrief", FieldsUserBrief),
             new Message("Notification", FieldsNotification),
+            new Message("NotificationsRead", FieldsNotificationsRead),
             new Message("ChatMessage", FieldsChatMessage),
             new Message("QuestProgress", FieldsQuestProgress),
             new Message("Lobby", FieldsLobby),

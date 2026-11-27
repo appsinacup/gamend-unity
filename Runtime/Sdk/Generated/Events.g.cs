@@ -67,6 +67,7 @@ namespace Gamend
         public const string LobbyUpdated = "lobby_updated";
         public const string MatchFound = "match_found";
         public const string NotificationEmitted = "notification_emitted";
+        public const string NotificationsRead = "notifications_read";
         public const string PartyChatMessage = "party_chat_message";
         public const string PartyChatMessageDeleted = "party_chat_message_deleted";
         public const string PartyChatMessageUpdated = "party_chat_message_updated";
@@ -132,6 +133,7 @@ namespace Gamend
         {
             new Row("user", "updated", "user_updated"),
             new Row("user", "notification_created", "notification_emitted"),
+            new Row("user", "notifications_read", "notifications_read"),
             new Row("user", "friend_updated", "friend_updated"),
             new Row("user", "kv_updated", "kv_updated"),
             new Row("user", "kv_deleted", "kv_deleted"),

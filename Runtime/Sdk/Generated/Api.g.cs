@@ -1853,6 +1853,18 @@ namespace Gamend
         // Notifications
 
         /// <summary>
+        /// Count unread notifications
+        /// </summary>
+        /// <remarks>
+        /// GET /api/v1/notifications/unread_count
+        /// </remarks>
+        public Task<Response> NotificationsCountUnreadNotifications()
+        {
+            var path = "/api/v1/notifications/unread_count";
+            return _rest.Send("GET", path, Body.None);
+        }
+
+        /// <summary>
         /// Delete notifications by IDs
         /// </summary>
         /// <remarks>
@@ -1864,6 +1876,18 @@ namespace Gamend
             if (!Query.Given(body, "ids")) return _rest.Refuse("NotificationsDeleteNotifications", "ids");
             var path = "/api/v1/notifications";
             return _rest.Send("DELETE", path, Body.Of(body));
+        }
+
+        /// <summary>
+        /// Get own notification settings
+        /// </summary>
+        /// <remarks>
+        /// GET /api/v1/me/notification_settings
+        /// </remarks>
+        public Task<Response> NotificationsGetNotificationSettings()
+        {
+            var path = "/api/v1/me/notification_settings";
+            return _rest.Send("GET", path, Body.None);
         }
 
         /// <summary>
@@ -1889,6 +1913,32 @@ namespace Gamend
         }
 
         /// <summary>
+        /// Mark every notification read
+        /// </summary>
+        /// <remarks>
+        /// POST /api/v1/notifications/read_all
+        /// </remarks>
+        public Task<Response> NotificationsMarkAllNotificationsRead()
+        {
+            var path = "/api/v1/notifications/read_all";
+            return _rest.Send("POST", path, Body.None);
+        }
+
+        /// <summary>
+        /// Mark notifications read by IDs
+        /// </summary>
+        /// <remarks>
+        /// POST /api/v1/notifications/read
+        /// body: ids (required).
+        /// </remarks>
+        public Task<Response> NotificationsMarkNotificationsRead(JObject body)
+        {
+            if (!Query.Given(body, "ids")) return _rest.Refuse("NotificationsMarkNotificationsRead", "ids");
+            var path = "/api/v1/notifications/read";
+            return _rest.Send("POST", path, Body.Of(body));
+        }
+
+        /// <summary>
         /// Send a notification to a friend
         /// </summary>
         /// <remarks>
@@ -1901,6 +1951,19 @@ namespace Gamend
             if (!Query.Given(body, "title")) return _rest.Refuse("NotificationsSendNotification", "title");
             var path = "/api/v1/notifications";
             return _rest.Send("POST", path, Body.Of(body));
+        }
+
+        /// <summary>
+        /// Change own notification settings
+        /// </summary>
+        /// <remarks>
+        /// PUT /api/v1/me/notification_settings
+        /// body: groups, off_all, off_email, off_push, timezone.
+        /// </remarks>
+        public Task<Response> NotificationsUpdateNotificationSettings(JObject body)
+        {
+            var path = "/api/v1/me/notification_settings";
+            return _rest.Send("PUT", path, Body.Of(body));
         }
 
         // Parties

@@ -1424,6 +1424,7 @@ namespace Gamend.Models
             v.Id = Field<string>(o, "id", ReadString, v.Id);
             v.InsertedAt = Field<string>(o, "inserted_at", ReadString, v.InsertedAt);
             v.Metadata = Field<JToken>(o, "metadata", ReadToken, v.Metadata);
+            v.Read = Field<bool>(o, "read", ReadBool, v.Read);
             v.RecipientId = Field<string>(o, "recipient_id", ReadString, v.RecipientId);
             v.SenderId = Field<string>(o, "sender_id", ReadString, v.SenderId);
             v.SenderName = Field<string>(o, "sender_name", ReadString, v.SenderName);
@@ -1442,10 +1443,88 @@ namespace Gamend.Models
             j["id"] = WriteString(v.Id);
             j["inserted_at"] = WriteString(v.InsertedAt);
             j["metadata"] = WriteToken(v.Metadata);
+            j["read"] = WriteBool(v.Read);
             j["recipient_id"] = WriteString(v.RecipientId);
             j["sender_id"] = WriteString(v.SenderId);
             j["sender_name"] = WriteString(v.SenderName);
             j["title"] = WriteString(v.Title);
+            return j;
+        }
+
+        public static bool ReadNotificationGroupSetting(JToken j, out NotificationGroupSetting value)
+        {
+            value = null;
+            var o = j as JObject;
+            if (o == null) return false;
+            var v = new NotificationGroupSetting();
+            v.Configurable = Field<List<string>>(o, "configurable", ListOf<string>(ReadString), v.Configurable);
+            v.Enabled = Field<Dictionary<string, bool>>(o, "enabled", MapOf<bool>(ReadBool), v.Enabled);
+            v.Key = Field<string>(o, "key", ReadString, v.Key);
+            v.Label = Field<string>(o, "label", ReadString, v.Label);
+            value = v;
+            return true;
+        }
+
+        public static JToken WriteNotificationGroupSetting(NotificationGroupSetting v)
+        {
+            if (v == null) return JValue.CreateNull();
+            var j = new JObject();
+            j["configurable"] = ListWriter<string>(WriteString)(v.Configurable);
+            j["enabled"] = MapWriter<bool>(WriteBool)(v.Enabled);
+            j["key"] = WriteString(v.Key);
+            j["label"] = WriteString(v.Label);
+            return j;
+        }
+
+        public static bool ReadNotificationSettings(JToken j, out NotificationSettings value)
+        {
+            value = null;
+            var o = j as JObject;
+            if (o == null) return false;
+            var v = new NotificationSettings();
+            v.Channels = Field<List<string>>(o, "channels", ListOf<string>(ReadString), v.Channels);
+            v.Groups = Field<List<NotificationGroupSetting>>(o, "groups", ListOf<NotificationGroupSetting>(ReadNotificationGroupSetting), v.Groups);
+            v.OffAll = Field<bool>(o, "off_all", ReadBool, v.OffAll);
+            v.OffEmail = Field<bool>(o, "off_email", ReadBool, v.OffEmail);
+            v.OffPush = Field<bool>(o, "off_push", ReadBool, v.OffPush);
+            v.Timezone = Field<string>(o, "timezone", ReadString, v.Timezone);
+            v.TimezoneManual = Field<bool>(o, "timezone_manual", ReadBool, v.TimezoneManual);
+            value = v;
+            return true;
+        }
+
+        public static JToken WriteNotificationSettings(NotificationSettings v)
+        {
+            if (v == null) return JValue.CreateNull();
+            var j = new JObject();
+            j["channels"] = ListWriter<string>(WriteString)(v.Channels);
+            j["groups"] = ListWriter<NotificationGroupSetting>(WriteNotificationGroupSetting)(v.Groups);
+            j["off_all"] = WriteBool(v.OffAll);
+            j["off_email"] = WriteBool(v.OffEmail);
+            j["off_push"] = WriteBool(v.OffPush);
+            j["timezone"] = WriteString(v.Timezone);
+            j["timezone_manual"] = WriteBool(v.TimezoneManual);
+            return j;
+        }
+
+        public static bool ReadNotificationsRead(JToken j, out NotificationsRead value)
+        {
+            value = null;
+            var o = j as JObject;
+            if (o == null) return false;
+            var v = new NotificationsRead();
+            v.Marked = Field<long>(o, "marked", ReadLong, v.Marked);
+            v.UnreadCount = Field<long>(o, "unread_count", ReadLong, v.UnreadCount);
+            value = v;
+            return true;
+        }
+
+        public static JToken WriteNotificationsRead(NotificationsRead v)
+        {
+            if (v == null) return JValue.CreateNull();
+            var j = new JObject();
+            j["marked"] = WriteLong(v.Marked);
+            j["unread_count"] = WriteLong(v.UnreadCount);
             return j;
         }
 
@@ -2681,6 +2760,25 @@ namespace Gamend.Models
             return j;
         }
 
+        public static bool ReadUnreadCount(JToken j, out UnreadCount value)
+        {
+            value = null;
+            var o = j as JObject;
+            if (o == null) return false;
+            var v = new UnreadCount();
+            v.UnreadCount_ = Field<long>(o, "unread_count", ReadLong, v.UnreadCount_);
+            value = v;
+            return true;
+        }
+
+        public static JToken WriteUnreadCount(UnreadCount v)
+        {
+            if (v == null) return JValue.CreateNull();
+            var j = new JObject();
+            j["unread_count"] = WriteLong(v.UnreadCount_);
+            return j;
+        }
+
         public static bool ReadUploadTicket(JToken j, out UploadTicket value)
         {
             value = null;
@@ -2848,6 +2946,12 @@ namespace Gamend.Models
             [typeof(List<MyReadyChecks>)] = j => { List<MyReadyChecks> v; return ListOf<MyReadyChecks>(ReadMyReadyChecks)(j, out v) ? v : null; },
             [typeof(Notification)] = j => { Notification v; return ReadNotification(j, out v) ? v : null; },
             [typeof(List<Notification>)] = j => { List<Notification> v; return ListOf<Notification>(ReadNotification)(j, out v) ? v : null; },
+            [typeof(NotificationGroupSetting)] = j => { NotificationGroupSetting v; return ReadNotificationGroupSetting(j, out v) ? v : null; },
+            [typeof(List<NotificationGroupSetting>)] = j => { List<NotificationGroupSetting> v; return ListOf<NotificationGroupSetting>(ReadNotificationGroupSetting)(j, out v) ? v : null; },
+            [typeof(NotificationSettings)] = j => { NotificationSettings v; return ReadNotificationSettings(j, out v) ? v : null; },
+            [typeof(List<NotificationSettings>)] = j => { List<NotificationSettings> v; return ListOf<NotificationSettings>(ReadNotificationSettings)(j, out v) ? v : null; },
+            [typeof(NotificationsRead)] = j => { NotificationsRead v; return ReadNotificationsRead(j, out v) ? v : null; },
+            [typeof(List<NotificationsRead>)] = j => { List<NotificationsRead> v; return ListOf<NotificationsRead>(ReadNotificationsRead)(j, out v) ? v : null; },
             [typeof(OAuthAuthorization)] = j => { OAuthAuthorization v; return ReadOAuthAuthorization(j, out v) ? v : null; },
             [typeof(List<OAuthAuthorization>)] = j => { List<OAuthAuthorization> v; return ListOf<OAuthAuthorization>(ReadOAuthAuthorization)(j, out v) ? v : null; },
             [typeof(Session)] = j => { Session v; return ReadSession(j, out v) ? v : null; },
@@ -2936,6 +3040,8 @@ namespace Gamend.Models
             [typeof(List<TournamentPlacement>)] = j => { List<TournamentPlacement> v; return ListOf<TournamentPlacement>(ReadTournamentPlacement)(j, out v) ? v : null; },
             [typeof(TournamentStandings)] = j => { TournamentStandings v; return ReadTournamentStandings(j, out v) ? v : null; },
             [typeof(List<TournamentStandings>)] = j => { List<TournamentStandings> v; return ListOf<TournamentStandings>(ReadTournamentStandings)(j, out v) ? v : null; },
+            [typeof(UnreadCount)] = j => { UnreadCount v; return ReadUnreadCount(j, out v) ? v : null; },
+            [typeof(List<UnreadCount>)] = j => { List<UnreadCount> v; return ListOf<UnreadCount>(ReadUnreadCount)(j, out v) ? v : null; },
             [typeof(UploadTicket)] = j => { UploadTicket v; return ReadUploadTicket(j, out v) ? v : null; },
             [typeof(List<UploadTicket>)] = j => { List<UploadTicket> v; return ListOf<UploadTicket>(ReadUploadTicket)(j, out v) ? v : null; },
             [typeof(WalletBalances)] = j => { WalletBalances v; return ReadWalletBalances(j, out v) ? v : null; },
