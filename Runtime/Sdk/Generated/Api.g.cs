@@ -2952,6 +2952,32 @@ namespace Gamend
         }
 
         /// <summary>
+        /// The icons and colours an avatar is picked from
+        /// </summary>
+        /// <remarks>
+        /// GET /api/v1/avatar_icons
+        /// </remarks>
+        public Task<Response> UsersListAvatarIcons()
+        {
+            var path = "/api/v1/avatar_icons";
+            return _rest.Send("GET", path, Body.None);
+        }
+
+        /// <summary>
+        /// Make one of the site's icons the avatar
+        /// </summary>
+        /// <remarks>
+        /// POST /api/v1/me/avatar/icon
+        /// body: icon (required), color.
+        /// </remarks>
+        public Task<Response> UsersPickCurrentUserAvatarIcon(JObject body)
+        {
+            if (!Query.Given(body, "icon")) return _rest.Refuse("UsersPickCurrentUserAvatarIcon", "icon");
+            var path = "/api/v1/me/avatar/icon";
+            return _rest.Send("POST", path, Body.Of(body));
+        }
+
+        /// <summary>
         /// Search users by id, username, or display_name
         /// </summary>
         /// <remarks>

@@ -45,6 +45,47 @@ namespace Gamend.Models
     }
 
     /// <summary>
+    /// An icon the avatar picker offers
+    /// </summary>
+    public sealed class AvatarIcon
+    {
+        /// <summary>
+        /// Its name, `rocket-launch`: what `icon` sends
+        /// </summary>
+        public string Key { get; set; } = "";
+        /// <summary>
+        /// The SVG, a path on the server (`/icons/&lt;name&gt;.svg`): a 24 px solid heroicon
+        /// </summary>
+        public string Url { get; set; } = "";
+    }
+
+    /// <summary>
+    /// A colour the avatar picker offers
+    /// </summary>
+    public sealed class AvatarIconColor
+    {
+        /// <summary>
+        /// What the site draws it with: `var(--color-&lt;name&gt;)`, the theme's own, or a
+        /// host's CSS colour
+        /// </summary>
+        public string Css { get; set; } = "";
+        /// <summary>
+        /// Its name, the theme's (`primary`, `info`, `success`, `warning`, `error`): what
+        /// `color` sends
+        /// </summary>
+        public string Key { get; set; } = "";
+    }
+
+    /// <summary>
+    /// The icons and colours the settings page's avatar picker offers
+    /// </summary>
+    public sealed class AvatarIcons
+    {
+        public List<AvatarIconColor> Colors { get; set; } = new List<AvatarIconColor>();
+        public List<AvatarIcon> Icons { get; set; } = new List<AvatarIcon>();
+    }
+
+    /// <summary>
     /// A user as it appears in a member list
     /// </summary>
     public sealed class UserBrief
