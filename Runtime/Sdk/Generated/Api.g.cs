@@ -2939,6 +2939,18 @@ namespace Gamend
         }
 
         /// <summary>
+        /// What the avatar picker shows lit
+        /// </summary>
+        /// <remarks>
+        /// GET /api/v1/me/avatar/icon
+        /// </remarks>
+        public Task<Response> UsersGetCurrentUserAvatarIcon()
+        {
+            var path = "/api/v1/me/avatar/icon";
+            return _rest.Send("GET", path, Body.None);
+        }
+
+        /// <summary>
         /// Get a user by id
         /// </summary>
         /// <remarks>

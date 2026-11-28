@@ -105,6 +105,27 @@ namespace Gamend.Models
             return j;
         }
 
+        public static bool ReadAvatarIconLit(JToken j, out AvatarIconLit value)
+        {
+            value = null;
+            var o = j as JObject;
+            if (o == null) return false;
+            var v = new AvatarIconLit();
+            v.Color = Field<string>(o, "color", ReadString, v.Color);
+            v.Icon = Field<string>(o, "icon", ReadString, v.Icon);
+            value = v;
+            return true;
+        }
+
+        public static JToken WriteAvatarIconLit(AvatarIconLit v)
+        {
+            if (v == null) return JValue.CreateNull();
+            var j = new JObject();
+            j["color"] = WriteString(v.Color);
+            j["icon"] = WriteString(v.Icon);
+            return j;
+        }
+
         public static bool ReadAvatarIcons(JToken j, out AvatarIcons value)
         {
             value = null;
@@ -3011,6 +3032,8 @@ namespace Gamend.Models
             [typeof(List<AvatarIcon>)] = j => { List<AvatarIcon> v; return ListOf<AvatarIcon>(ReadAvatarIcon)(j, out v) ? v : null; },
             [typeof(AvatarIconColor)] = j => { AvatarIconColor v; return ReadAvatarIconColor(j, out v) ? v : null; },
             [typeof(List<AvatarIconColor>)] = j => { List<AvatarIconColor> v; return ListOf<AvatarIconColor>(ReadAvatarIconColor)(j, out v) ? v : null; },
+            [typeof(AvatarIconLit)] = j => { AvatarIconLit v; return ReadAvatarIconLit(j, out v) ? v : null; },
+            [typeof(List<AvatarIconLit>)] = j => { List<AvatarIconLit> v; return ListOf<AvatarIconLit>(ReadAvatarIconLit)(j, out v) ? v : null; },
             [typeof(AvatarIcons)] = j => { AvatarIcons v; return ReadAvatarIcons(j, out v) ? v : null; },
             [typeof(List<AvatarIcons>)] = j => { List<AvatarIcons> v; return ListOf<AvatarIcons>(ReadAvatarIcons)(j, out v) ? v : null; },
             [typeof(UserBrief)] = j => { UserBrief v; return ReadUserBrief(j, out v) ? v : null; },

@@ -77,6 +77,21 @@ namespace Gamend.Models
     }
 
     /// <summary>
+    /// The icon and the colour the caller's avatar picker shows lit
+    /// </summary>
+    public sealed class AvatarIconLit
+    {
+        /// <summary>
+        /// The colour lit: the icon's, else the one an icon picked next takes; "" for none
+        /// </summary>
+        public string Color { get; set; } = "";
+        /// <summary>
+        /// The icon lit (the one picked, else the account's own), "" for a picture
+        /// </summary>
+        public string Icon { get; set; } = "";
+    }
+
+    /// <summary>
     /// The icons and colours the settings page's avatar picker offers
     /// </summary>
     public sealed class AvatarIcons
